@@ -35,13 +35,13 @@
 | Default and optional configs | https://external-secrets.io/latest/guides/security-best-practices|
 
 ## Overview
-External Secrets Operator (ESO) is a Kubernetes operator that integrates external secret management systems like AWS Secrets Manager, HashiCorp Vault, Google Secrets Manager, Azure Key Vault, IBM Cloud Secrets Manager, CyberArk Conjur and many more. The operator reads information from external APIs and automatically injects the values into a Kubernetes Secret.
+External Secrets Operator (ESO) is a Kubernetes operator that integrates external secret management systems like AWS Secrets Manager, HashiCorp Vault, Google Secrets Manager, Azure Key Vault, IBM Cloud Secrets Manager, CyberArk Conjur, and many more. The operator reads information from external APIs and automatically injects the values into a Kubernetes Secret.
 
 <p align="center"><img width="600" alt="image" src="docs/overview.png"></p>
 
 
 ### Background
-The External Secrets Operator (ESO) is a tool designed for Kubernetes, a widely-used system for automating the deployment, scaling, and management of containerized applications. ESO addresses a key challenge in this domain: secure and efficient management of sensitive configuration data, known as "secrets" (like passwords, API keys, etc.). Typically, managing these secrets within Kubernetes can be complex and risky if not handled properly. ESO simplifies this by integrating Kubernetes with external secret management services (such as AWS Secrets Manager or HashiCorp Vault), which specialize in securely storing and managing these secrets. This integration not only enhances security but also streamlines the process of injecting these secrets into Kubernetes applications.
+The External Secrets Operator (ESO) is a tool designed for Kubernetes, a widely used system for automating the deployment, scaling, and management of containerized applications. ESO addresses a key challenge in this domain: secure and efficient management of sensitive configuration data, known as "secrets" (like passwords, API keys, etc.). Typically, managing these secrets within Kubernetes can be complex and risky if not handled properly. ESO simplifies this by integrating Kubernetes with external secret management services (such as AWS Secrets Manager or HashiCorp Vault), which specialize in securely storing and managing these secrets. This integration not only enhances security but also streamlines the process of injecting these secrets into Kubernetes applications.
 
 ### Actors
 
@@ -112,24 +112,22 @@ The External Secrets Operator (ESO) is a tool designed for Kubernetes, a widely-
 
 This self-assessment is created by the External Secrets Operator (ESO) team to perform an internal analysis of the project's security. It is not intended to provide a security audit of ESO, or function as an independent assessment or attestation of ESO's security health.
 
-This document serves to provide ESO users with an initial understanding of ESO's security, where to find existing security documentation, ESO plans for security, and general overview of ESO security practices, both for development of ESO as well as security of ESO.
+This document serves to provide ESO users with an initial understanding of ESO's security, where to find existing security documentation, ESO plans for security, and a general overview of ESO security practices, both for the development of ESO as well as the security of ESO.
 
 This document provides the CNCF TAG-Security with an initial understanding of ESO to assist in a joint-assessment, necessary for projects under incubation. Taken together, this document and the joint-assessment serve as a cornerstone for if and when ESO seeks graduation and is preparing for a security audit.
 
 
 ## Security functions and features
 
-### Critical Components
-* Authentication and Authorization Interface: Connects with external secret management systems; ensures only authenticated and authorized access to secrets.
-* Secret Synchronization Mechanism: Securely transfers secrets from external systems to Kubernetes, critical for maintaining the confidentiality and integrity of secret data.
-* Kubernetes Secrets Management: Handles the creation and updating of Kubernetes Secrets, a fundamental aspect of ensuring that only authorized Kubernetes workloads can access the synchronized secrets.
-
-### Security Relevant Components.
-* Configuration of Secret Stores: Involves setting up SecretStore and ClusterSecretStore resources, impacting how securely ESO interacts with external systems.
-* Role-Based Access Control (RBAC) Configuration: Determines what resources within Kubernetes the ESO can access, significantly affecting the isolation and security of the secrets.
-* Network Policies: Governs the network traffic to and from ESO, relevant for preventing unauthorized network access.
-
-### [Threat Modeling with STRIDE](#external-secrets-operator-threat-modeling)
+* Critical.  A listing of critical security components of the project with a brief
+description of their importance.  It is recommended these be used for threat modeling.
+These are considered critical design elements that make the product itself secure and
+are not configurable.  Projects are encouraged to track these as primary impact items
+for changes to the project.
+* Security Relevant.  A listing of security-relevant components of the project with
+  a brief description.  These are considered important to enhance the overall security of
+the project, such as deployment configurations, settings, etc.  These should also be
+included in threat modeling.
 
 ## Project compliance
 
@@ -143,12 +141,12 @@ ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best prac
 ### Development Pipeline
 
 * All source code is publicly maintained in [GitHub](https://github.com/external-secrets/external-secrets).
-* Code changes are submitted via Pull Requests (PRs) and must be reviewed and approved by atleast one maintainer.
+* Code changes are submitted via Pull Requests (PRs) and must be reviewed and approved by at least one maintainer.
 * Commits to the `main` branch are merged only when a PR is approved and passes all checks.
 * Once a pull request has been opened it will be assigned to a reviewer from external-secrets/maintainers.
-* ESO uses the Github Bot [Paul the Alien](https://github.com/apps/paul-the-alien) (which is still in Alpha) to store the list of maintainers, to approve/merge PRs and to delete branches after PR merges.
-* Raising a PR triggers a series of github actions and workflows whose component checks are broken down below:
-  * [Sonar Cloud Quality Gate](https://sonarcloud.io/project/issues?id=external-secrets_external-secrets) check initiated by the sonarcloud bot which checks for bugs, vulenrabilities, security hotspots, code smells, code coverage and duplication
+* ESO uses the GitHub Bot [Paul the Alien](https://github.com/apps/paul-the-alien) (which is still in Alpha) to store the list of maintainers, to approve/merge PRs, and to delete branches after PR merges.
+* Raising a PR triggers a series of GitHub actions and workflows whose component checks are broken down below:
+  * [Sonar Cloud Quality Gate](https://sonarcloud.io/project/issues?id=external-secrets_external-secrets) check initiated by the sonarcloud bot which checks for bugs, vulnerabilities, security hotspots, code smells, code coverage, and duplication
   * Developer Certificate of Origin (DCO) check to verify commits are signed correctly
   * Detect noop ([skip-duplicate-actions](https://github.com/fkirc/skip-duplicate-actions)) 
   * Linting check
@@ -159,21 +157,24 @@ ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best prac
   * Building the image
   * Image scanning for vulnerabilities using Trivy
   * Create SBOM & provenance files and sign the image
-  * Pubish signed artifacts to Dockerhub
+  * Publish signed artifacts to Dockerhub
 
 ### Communication Channels
 * Referenced in docs under [How to Get Involved](https://external-secrets.io/latest/#how-to-get-involved) and described below:
   * Bi-weekly Development Meeting every odd week at 8:00 PM Berlin Time on Wednesday ([agenda](https://hackmd.io/GSGEpTVdRZCP6LDxV3FHJA), [jitsi call](https://meet.jit.si/eso-community-meeting))
-  * [Kubernetes Slack: #external-secrets channel](https://kubernetes.slack.com/messages/external-secrets)
-  * [Contributing Process](https://external-secrets.io/latest/contributing/process/)
-  * [Twitter](https://twitter.com/ExtSecretsOptr)
-* Relevant but not mentioned in the docs:
-  * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
-  * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
-* Technical Support policy detailed in [docs/stability-support](https://external-secrets.io/latest/introduction/stability-support/#technical-support)
-
+    * Internal
+      * [Kubernetes Slack: #external-secrets channel](https://kubernetes.slack.com/messages/external-secrets)
+      * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)
+      * [Github Issues](https://github.com/external-secrets/external-secrets/issues)
+    * Inbound
+      * [Contributing Process](https://external-secrets.io/latest/contributing/process/)
+      * [Github Discussions](https://github.com/external-secrets/external-secrets/discussions)  
+    * Outbound
+      * [Twitter](https://twitter.com/ExtSecretsOptr)
+  
+  
 ### Ecosystem
-* ESO has replaced the now deprecated and archived kubernetes-external-secrets as detailed in this [issue](https://github.com/external-secrets/kubernetes-external-secrets/issues/864). We can expect the services that used kubernetes-external-secrets to migrate to ESO.
+* ESO has replaced the now deprecated and archived kubernetes-external-secrets as detailed in this [issue](https://github.com/external-secrets/kubernetes-external-secrets/issues/864). We can expect the services that used Kubernetes-external-secrets to migrate to ESO.
 * ESO also maintains an official list of its [Adopters](https://github.com/external-secrets/external-secrets/blob/main/ADOPTERS.md). 
 
 ## Security issue resolution
@@ -186,10 +187,10 @@ ESO's security policy can be found in [SECURITY.md](https://github.com/external-
 ### Vulnerability Response Process
 * No specific information on this is provided in the security file currently.
 * Recommendation:
-  * Dedicated email for reporting security bugs/vulnerabilities that is monitored 24x7.
+  * Dedicated email for reporting security bugs/vulnerabilities that are monitored 24x7.
   * Acknowledgement email to reporter within a reasonable time span once the process it started.
   * Information on maintainers who are charged with responding to security events (in case an immediate response is required).
-  * Include specific timeline/procedures to assign resources and fix a reported vulnerability.
+  * Include specific timelines/procedures to assign resources and fix a reported vulnerability.
 ### Incident Response
 * Since this project does not directly handle any customer data, any users who experience an incident will report a vulnerability.
 
@@ -198,7 +199,7 @@ ESO's security policy can be found in [SECURITY.md](https://github.com/external-
 
 ### Known Issues Over Time
 * ESO tracks all bugs and issues publicly at external-secrets [Github Issues](https://github.com/external-secrets/external-secrets/issues).
-* No major vulnerabiltiy has been documented or disclosed to the public.
+* No major vulnerability has been documented or disclosed to the public.
 
 ### [CII Best Practices](https://www.coreinfrastructure.org/programs/best-practices-program/)
 *  ESO has achieved a "passing" Open Source Security Foundation (OpenSSF) best practices badge [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/5947/badge)](https://www.bestpractices.dev/projects/5947). The project is working on receiving a silver badge and is in the process of meeting the criteria for it.
@@ -206,37 +207,15 @@ ESO's security policy can be found in [SECURITY.md](https://github.com/external-
 ### Case Studies
 * Use Case 1: Managing secrets for multiple environments
 
-  A company has multiple environments for their applications, such as development, staging, and production. They use different credentials for each environment to access external resources, such as databases and cloud storage. ESO can be used to automatically synchronize these credentials to the appropriate Kubernetes secrets for each environment. This makes it easy to manage secrets and ensures that applications always have access to the correct credentials. 
+  A company has multiple environments for its applications, such as development, staging, and production. They use different credentials for each environment to access external resources, such as databases and cloud storage. ESO can be used to automatically synchronize these credentials to the appropriate Kubernetes secrets for each environment. This makes it easy to manage secrets and ensures that applications always have access to the correct credentials. 
 * Use Case 2: Rotating secrets for security
 
   It is important to rotate secrets regularly to prevent unauthorized access. However, manually rotating secrets can be time-consuming and error-prone. ESO can be used to automate the rotation of secrets. ESO can be configured to fetch secrets from an external source, such as AWS Secrets Manager or HashiCorp Vault, and then store them in Kubernetes secrets. ESO can also be configured to rotate secrets on a regular basis.
 * Use Case 3: Accessing secrets from multiple sources
 
-  A company may use multiple sources for their secrets, such as AWS Secrets Manager, HashiCorp Vault, and a custom secrets store. ESO can be used to access secrets from all of these sources. ESO can be configured to use different secret providers for different types of secrets. For example, ESO could be configured to use AWS Secrets Manager for database credentials and HashiCorp Vault for API keys.
+  A company may use multiple sources for its secrets, such as AWS Secrets Manager, HashiCorp Vault, and a custom secrets store. ESO can be used to access secrets from all of these sources. ESO can be configured to use different secret providers for different types of secrets. For example, ESO could be configured to use AWS Secrets Manager for database credentials and HashiCorp Vault for API keys.
 
 ### Related Projects / Vendors
-* Kubernetes External Secrets (deprecated): [kubernetes-external-secrets](https://github.com/external-secrets/kubernetes-external-secrets) is the original project kicked off by Godaddy while external-secrets is the newer one that replaced it. According to the team, KES does not have any dedicated or active maintainers at this time and is on limited life support. There were tech debts in the project that were causing issues and some of the dependencies they depended on are no longer maintained. To replace them would have required a sizeable effort. Also, KES was originally written in Javascript and the newer ESO is written in the more Kubernetes friendly Golang. There is a [tool](https://github.com/external-secrets/kes-to-eso) available to migrate from KES to ESO.
+* Kubernetes External Secrets (deprecated): [kubernetes-external-secrets](https://github.com/external-secrets/kubernetes-external-secrets) is the original project kicked off by Godaddy while external-secrets is the newer one that replaced it. According to the team, KES does not have any dedicated or active maintainers at this time and is on limited life support. There were tech debts in the project that were causing issues and some of the dependencies they depended on are no longer maintained. To replace them would have required a sizeable effort. Also, KES was originally written in Javascript and the newer ESO is written in the more Kubernetes-friendly Golang. There is a [tool](https://github.com/external-secrets/kes-to-eso) available to migrate from KES to ESO.
 
-* CSI Secret Store - Integrates secrets stores with Kubernetes via a Container Storage Interface (CSI) volume. The Secrets Store CSI Driver `secrets-store.csi.k8s.io` allows Kubernetes to mount multiple secrets, keys, and certs stored in enterprise-grade external secrets stores into their pods as a volume. Once the Volume is attached, the data in it is mounted into the container’s file system. The differences between ESO and CSI Secret Store them are documented in this issue [comment](https://github.com/external-secrets/external-secrets/issues/478#issuecomment-964413129).
-
-### External Secrets Operator Threat Modeling
-
-ESO has a threat-model documented at [threat-model](https://external-secrets.io/latest/guides/threat-model/).
-
-We're also providing our own threat modeling using STRIDE below:
-
-#### Spoofing
-
-
-#### Tampering
-
-#### Repudiation
-
-#### Information Disclosure
-
-#### Denial of Service (DoS)
-
-#### Elevation of Privilege
-
-
-
+* CSI Secret Store - Integrates secrets stores with Kubernetes via a Container Storage Interface (CSI) volume. The Secrets Store CSI Driver `secrets-store.csi.k8s.io` allows Kubernetes to mount multiple secrets, keys, and certs stored in enterprise-grade external secrets stores into their pods as a volume. Once the Volume is attached, the data in it is mounted into the container’s file system. The differences between ESO and CSI Secret Store are documented in this issue [comment](https://github.com/external-secrets/external-secrets/issues/478#issuecomment-964413129).
